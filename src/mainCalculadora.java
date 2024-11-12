@@ -22,6 +22,8 @@ public class mainCalculadora {
     private JButton btn0;
     private JPanel calcular;
 
+    public String valorSinal = "0";
+    public String valor1 = "0";
 
     public static void main(String[] args) {
 
@@ -33,29 +35,94 @@ public class mainCalculadora {
     }
 
     public void teste(int x){
-        visor.setText(visor.getText() + x);
+        visor.setText(visor.getText() + x); //adiciona o número no visor
     };
 
-    public void calcular(){
+    public void sinais(String sinal){
+        valor1 = visor.getText(); //guarda o valor atual do visor
+        visor.setText(sinal); // limpa o visor e coloca o sinal no lugar
+        valorSinal = sinal; // guarda o sinal da operação
+    }
 
-        if (visor.getText().contains("+")){
+    public void resultado(){
 
+        int resul = 0;
+
+        if (valorSinal.equals("+")){
+            resul = Integer.parseInt(valor1) + Integer.parseInt(visor.getText());
+            visor.setText( String.valueOf(resul));
         }
+
+        if (valorSinal.equals("-")){
+            resul = Integer.parseInt(valor1) - Integer.parseInt( visor.getText().substring(1) );
+            visor.setText( String.valueOf(resul));
+        }
+
+        if (valorSinal.equals("*")){
+            resul = Integer.parseInt(valor1) * Integer.parseInt( visor.getText().substring(1) );
+            visor.setText( String.valueOf(resul));
+        }
+
+        if (valorSinal.equals("/")){
+            resul = Integer.parseInt(valor1) / Integer.parseInt( visor.getText().substring(1) );
+            visor.setText( String.valueOf(resul));
+        }
+
 
     }
 
     public mainCalculadora(){
 
+        btnEqual.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                resultado();
+            }
+        });
+
+        //BOTAO MAIS
+        btnPlus.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sinais("+");
+            }
+        });
+
+        btnSub.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sinais("-");
+            }
+        });
+
+        btnMulti.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sinais("*");
+            }
+        });
+
+        btnDiv.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sinais("/");
+            }
+        });
+
+        //BOTAO CLEAR
         btnC.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 visor.setText("");
+                valor1 = "0";
+                valorSinal = "0";
             }
         });
 
         btn1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 teste(1);
             }
         });
